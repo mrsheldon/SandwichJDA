@@ -43,7 +43,7 @@ public class BanCommand extends SandwichCommand {
             return;
         }
         Member FinalUser = event.getGuild().getMember(User);
-        event.reply(FinalUser.getAsMention() + " has been kicked.");
         event.getGuild().getController().ban(FinalUser, 0, "Ban by " + event.getMessage().getAuthor().getName() + "#" + event.getMessage().getAuthor().getDiscriminator()).queue();
+        event.reply(FinalUser.getAsMention() + " has been banned.");
     }
 }

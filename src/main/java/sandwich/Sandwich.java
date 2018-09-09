@@ -34,6 +34,8 @@ public class Sandwich {
                 // Moderation Commands
                 new KickCommand(),
                 new BanCommand(),
+                new MuteCommand(),
+                new UnmuteCommand(),
                 // Currency Commands
                 new BalanceCommand(),
                 // Fun Commands

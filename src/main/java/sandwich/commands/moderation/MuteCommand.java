@@ -4,24 +4,27 @@
 
 package commands.moderation;
 
-import utils.SandwichCommand;
 import net.dv8tion.jda.core.Permission;
-import com.jagrosh.jdautilities.command.CommandEvent;
-import net.dv8tion.jda.core.entities.User;
-import java.util.List;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.Role;
+import utils.SandwichCommand;
+import com.jagrosh.jdautilities.command.CommandEvent;
 
-public class KickCommand extends SandwichCommand {
-    public KickCommand() {
-        this.name = "kick";
-        this.help = "Kick a user from the server";
-        this.usage = "!kick @user";
+import java.util.List;
+
+public class MuteCommand extends SandwichCommand {
+    public MuteCommand() {
+        this.name = "mute";
+        this.help = "Mute a user";
+        this.usage = "!mute @user";
         this.category = new Category("Moderation");
         this.guildOnly = true;
+        this.ID = 33;
         this.userPermissions = new Permission[]{Permission.KICK_MEMBERS};
         this.botPermissions = new Permission[]{Permission.KICK_MEMBERS};
-        this.ID = 31;
     }
+
     protected void execute(CommandEvent event) {
         if (!event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
             event.reply("You are not a moderator.");
@@ -41,8 +44,26 @@ public class KickCommand extends SandwichCommand {
             event.reply("This user is a moderator, you can't use this command on him.");
             return;
         }
+        Role mutedrole = null;
+        for(Role role : event.getGuild().getRoles())
+            if(role.getName().equalsIgnoreCase("muted"))
+            {
+                mutedrole = role;
+                break;
+            }
+        if(mutedrole==null)
+        {
+            event.reply("No \"Muted\" role exists! Please add and setup up a \"Muted\" role.");
+            return;
+        }
         Member FinalUser = event.getGuild().getMember(User);
-        event.getGuild().getController().kick(FinalUser).queue();
-        event.reply(FinalUser.getAsMention() + " has been kicked.");
+        try {
+            event.getGuild().getController().addRolesToMember(FinalUser, mutedrole).queue();
+            event.reply(FinalUser.getAsMention() + " has been muted.");
+            return;
+        } catch(Exception e) {
+            event.reply("Failed to mute " + FinalUser.getAsMention());
+            return;
+        }
     }
 }
