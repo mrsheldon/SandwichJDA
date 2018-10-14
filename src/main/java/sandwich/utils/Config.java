@@ -10,7 +10,6 @@ public class Config {
     public static final String BETA_PREFIX = "!";
     public static final String NORMAL_PREFIX = "s!";
     public static final String TOKEN = "";
-    public static final String DB = "D:/JavaProject/dbot/src/main/java/db/database.db";
     public static final String BOTID = "479049776814358531";
     public static final String OWNERID = "231733082804322304";
     public static final String SERVERINVITE = "https://discord.gg/76PAmCv";
