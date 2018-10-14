@@ -1,4 +1,0 @@
-CREATE TABLE `users` (
-	`id`	TEXT,
-	`balance`	INTEGER DEFAULT 100
-);
